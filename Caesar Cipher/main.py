@@ -2,8 +2,10 @@
 
 from map import Table
 
-class CaesarCipher():
+
+class CaesarCipher:
 	"""docstring for CeaserCipher"""
+
 	def __init__(self, key: int):
 		super().__init__()
 		self.key: int = key
@@ -11,7 +13,7 @@ class CaesarCipher():
 	def encrypt(self, message: str, maps: dict) -> str:
 		themap, revmap = maps
 
-		indexes:list = []
+		indexes: list = []
 		for m in message.upper():
 			indexes.append(revmap[m])
 
@@ -19,10 +21,10 @@ class CaesarCipher():
 
 		encmsg = [themap[idx % len(themap)] for idx in indexes]
 
-		return ''.join(encmsg)
+		return "".join(encmsg)
 
-	def decrypt(self) -> str:
-		...
+	def decrypt(self) -> str: ...
+
 
 table = Table()
 cc = CaesarCipher(3)
