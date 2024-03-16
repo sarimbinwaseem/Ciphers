@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+# from functools import cache
 from map import Table
 
 
@@ -10,9 +11,10 @@ class CaesarCipher:
 		super().__init__()
 		self.key: int = key
 
-	def encrypt(self, message: str, maps: dict) -> str:
+	# @cache
+	def encrypt(self, message: str, maps: tuple) -> str:
 		themap, revmap = maps
-
+		print(themap, revmap)
 		indexes: list = []
 		for m in message.upper():
 			indexes.append(revmap[m])
@@ -26,7 +28,9 @@ class CaesarCipher:
 	def decrypt(self) -> str: ...
 
 
+MESSAGE = "The dark romans are attacking zombies We have a window of two minutes"
+
 table = Table()
-cc = CaesarCipher(3)
-res = cc.encrypt("zorinOS", table.get_alpha_map())
+cc = CaesarCipher(key = 3)
+res = cc.encrypt(MESSAGE, table.get_alpha_map())
 print(res)
