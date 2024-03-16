@@ -2,7 +2,7 @@
 
 from map import Table
 
-class CaeserCipher():
+class CaesarCipher():
 	"""docstring for CeaserCipher"""
 	def __init__(self, key: int):
 		super().__init__()
@@ -25,6 +25,6 @@ class CaeserCipher():
 		...
 
 table = Table()
-cc = CaeserCipher(3)
+cc = CaesarCipher(3)
 res = cc.encrypt("zorinOS", table.get_alpha_map())
 print(res)
