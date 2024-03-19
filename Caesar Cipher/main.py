@@ -13,20 +13,27 @@ class CaesarCipher:
 
 	# @cache
 	def encrypt(self, message: str, maps: tuple) -> str:
+		"""Encrypt a message by Caesar Cipher"""
+
 		themap, revmap = maps
 
 		indexes: list = []
+
+		# Getting the indexes of alphabets.
 		for m in message.upper():
 			indexes.append(revmap[m])
 
+		# Adding/Increasing key to the indexes of alphabets.
 		indexes = [idx + self.key for idx in indexes]
 
+		# Taking mod of the new indexes.
 		encmsg = [themap[idx % len(themap)] for idx in indexes]
 
+		# Returning as string.
 		return "".join(encmsg)
 
-
 	def decrypt(self, message: str, maps: tuple) -> str:
+		"""Decrypt a message encrypted by Caesar Cipher"""
 
 		themap, revmap = maps
 
@@ -41,12 +48,21 @@ class CaesarCipher:
 		return "".join(decmsg)
 
 
-MESSAGE = "The dark romans are attacking zombies We have a window of two minutes"
+def main():
+	MESSAGE = "The dark romans are attacking zombies We have a window of two minutes"
 
-table = Table()
-cc = CaesarCipher(key = 3)
-res = cc.encrypt(MESSAGE, table.get_alpha_map())
-print(f"Encrypted: {res}")
+	table = Table()
+	alpha_map = table.get_alpha_map()
+	cc = CaesarCipher(key=8)
 
-decres = cc.decrypt(res, table.get_alpha_map())
-print(f"Decrypted: {decres}")
+	# Encrypting
+	res = cc.encrypt(MESSAGE, alpha_map)
+	print(f"Encrypted: {res}")
+
+	# Decrypting
+	decres = cc.decrypt(res, alpha_map)
+	print(f"Decrypted: {decres}")
+
+
+if __name__ == "__main__":
+	main()
