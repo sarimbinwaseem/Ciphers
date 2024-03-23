@@ -8,3 +8,7 @@
 
 1. Open main.py and change the message and key.
 2. Umm.. run
+
+
+## Affine Cipher:
+### Comming soon
