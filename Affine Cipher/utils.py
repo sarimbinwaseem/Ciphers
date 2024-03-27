@@ -6,6 +6,6 @@ class AffineMaths():
 	gcd: calculates GCD of number and len(table).
 	mul_inverse: calculates multiplicative inverse of a number.
 	"""
-	def __init__(self):
+	def __init__(self, arg):
 		super().__init__()
-		# self.arg = arg
+		self.arg = arg

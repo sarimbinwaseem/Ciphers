@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 # from functools import cache
+import argparse
 from map import Table
 
 
@@ -49,11 +50,22 @@ class CaesarCipher:
 
 
 def main():
-	MESSAGE = "The dark romans are attacking zombies We have a window of two minutes"
+	parser = argparse.ArgumentParser(
+		prog='Caesar Cipher',
+		description='Encrypts and decrypts using Caesar Cipher',
+			)
+
+	parser.add_argument('-k', '--key', default = 3, type = int, help = "Put key value here") 
+	parser.add_argument('-m', '--message', type = str, help = "Put message here", required = True)
+
+	args = parser.parse_args()
+
+	MESSAGE = args.message
+	KEY = args.key
 
 	table = Table()
 	alpha_map = table.get_alpha_map()
-	cc = CaesarCipher(key=8)
+	cc = CaesarCipher(key = KEY)
 
 	# Encrypting
 	res = cc.encrypt(MESSAGE, alpha_map)

@@ -6,8 +6,11 @@
 ## Caesar Cipher:
 ### How to run:
 
-1. Open main.py and change the message and key.
-2. Umm.. run
+```
+python main.py -m "The message of secret" -k 8
+```
+
+- -k/--key is optional as it defaults to 3
 
 
 ## Affine Cipher:
