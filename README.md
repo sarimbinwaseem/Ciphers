@@ -6,8 +6,19 @@
 ## Caesar Cipher:
 ### How to run:
 
+#### Encrypt:
 ```
-python main.py -m "The message of secret" -k 8
+python main.py -e -m "The message of secret" -k 8
+```
+
+#### Decrypt:
+```
+python main.py -d "APMHUM  IOMHWNH MKZMA" -k 8
+```
+
+#### Both:
+```
+python main.py -ed -m "The message of secret" -k 8
 ```
 
 - -k/--key is optional as it defaults to 3
