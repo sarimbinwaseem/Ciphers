@@ -41,7 +41,8 @@ class PlayfairUtils():
 				else:
 					# creating error.
 					if (alpha == 'I' or alpha == 'J') and self.check_for_IJ():
-						self.matrix[self.first_index][self.second_index] = 'I'
+						continue
+						# self.matrix[self.first_index][self.second_index] = 'I'
 
 					else:
 						self.matrix[self.first_index][self.second_index] = alpha
