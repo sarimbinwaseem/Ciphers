@@ -26,3 +26,10 @@ python main.py -ed -m "The message of secret" -k 8
 
 ## Affine Cipher:
 ### Comming soon
+
+
+## Playfair Cipher
+- Encryption is working
+- Code needs optimization and a standard running procedure.
+- Spaces will break the code.
+- Double letters are not welcome in message at the moment.
