@@ -19,14 +19,14 @@ class PlayfairUtils():
 
 		return key_set
 
-	def check_for_IJ(self):
+	def check_for_IJ(self) -> bool:
 		for row in self.matrix:
 			if 'I' in row or 'J' in row:
 				return True
 
 		return False
 
-	def insert_into_matrix(self, data):
+	def insert_into_matrix(self, data) -> None:
 		"""Inserting keyword into matrix"""
 
 		data = SequenceIterator(data)
@@ -46,10 +46,10 @@ class PlayfairUtils():
 
 					else:
 						self.matrix[self.first_index][self.second_index] = alpha
-					print(f"First_index: {self.first_index} and Second_index: {self.second_index}")
-					print(f"Alphabet: {alpha}")
-					pprint(self.matrix)
-					print()
+					# print(f"First_index: {self.first_index} and Second_index: {self.second_index}")
+					# print(f"Alphabet: {alpha}")
+					# pprint(self.matrix)
+					# print()
 					self.second_index += 1
 			if flag:
 				self.second_index = 0
@@ -57,6 +57,17 @@ class PlayfairUtils():
 			if flag is False:
 				break
 
+	def get_letter_row(self, letter) -> int:
+		for index_row, row in enumerate(self.matrix):
+			if letter in row:
+				idx_row = index_row
+
+		return idx_row
+
+	def get_letter_index(self, row_index, letter) -> int:
+		idx_letter = self.matrix[row_index].index(letter)
+
+		return idx_letter
 
 def main():
 	pu = PlayfairUtils()
