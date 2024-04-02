@@ -3,6 +3,7 @@ PlayFair Cipher
 github.com/sarimbinwaseem/Ciphers
 """
 
+# import argparse
 from string import ascii_uppercase
 from pprint import pprint
 from utils import PlayfairUtils
@@ -69,7 +70,7 @@ class Playfair(PlayfairUtils):
         Currently not implemented to the end.
         """
 
-        assert type(message) is str
+        assert isinstance(message, str)
 
         self.make_message_pair(message)
         print(f"Message Pair: {self.message_pair}")
@@ -144,14 +145,11 @@ class Playfair(PlayfairUtils):
 def main():
 
     pf = Playfair(keyword="AACHEN")
+
     pf.create_matrix()
     pprint(pf.matrix)
-    # pf.make_message_pair(message = "BAQLAWA")
-    # print(pf.message_pair)
 
     pf.encrypt("CHARLEMAGNE")
-    # e = pf.get_letter_row('G')
-    # print(e)
 
 
 if __name__ == "__main__":
