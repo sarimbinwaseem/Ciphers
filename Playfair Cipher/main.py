@@ -14,7 +14,7 @@ class Playfair(PlayfairUtils):
 		self.keyword = self.clean_keyword(keyword.upper())
 
 		
-	def create_matrix(self):
+	def create_matrix(self) -> None:
 		"""
 		create matrix with keyword and alphabets
 		"""
@@ -34,13 +34,42 @@ class Playfair(PlayfairUtils):
 
 		self.insert_into_matrix(remaining)
 
+	def make_message_pair(self, message: str) -> list[str]:
+		
+		new_message = []
+		temp_msg = ""
+		count = 0
+		for s in message:
+			if count == 2:
+				new_message.append(temp_msg)
+				temp_msg = ""
+				count = 0
+			print(s)
+			temp_msg += s
+			count += 1
+			print(count)
+
+		if len(temp_msg) == 1:
+			temp_msg += 'x'
+
+		new_message.append(temp_msg)
+
+		return new_message
+
+	def encrypt(self, message) -> str:
+		pass
+
 
 
 
 def main():
 
 	pf = Playfair("reeeq")
-	pf.create_matrix()
-	print(pf.matrix)
+	# pf.create_matrix()
+	# print(pf.matrix)
+	d = pf.make_message_pair("carpete")
+	print(d)
 if __name__ == '__main__':
 	main()
+
+
