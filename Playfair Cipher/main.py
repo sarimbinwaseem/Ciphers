@@ -3,7 +3,7 @@ PlayFair Cipher
 github.com/sarimbinwaseem/Ciphers
 """
 
-# import argparse
+import argparse
 from string import ascii_uppercase
 from pprint import pprint
 from utils import PlayfairUtils
@@ -195,16 +195,42 @@ class Playfair(PlayfairUtils):
 def main():
     """main entry point."""
 
-    pf = Playfair(keyword="AACHEN")
+    parser = argparse.ArgumentParser(
+        description="Encrypts and decrypts using Playfair Cipher",
+    )
 
-    pf.create_matrix()
-    pprint(pf.matrix)
+    parser.add_argument("-k", "--key", type=str, help="Put key value here.", required = True)
+    parser.add_argument(
+        "-m", "--message", type=str, help="Put message here.", required=True
+    )
+    parser.add_argument(
+        "-e", "--encrypt", help="Encrypts the message.", action="store_true"
+    )
+    parser.add_argument(
+        "-d", "--decrypt", help="Decrypts the message.", action="store_true"
+    )
+    args = parser.parse_args()
 
-    enc = pf.encrypt("CHARLEMAGNE")
-    print(enc)
+    MESSAGE = args.message
+    KEY = args.key
 
-    dec = pf.decrypt("HECQOCKHIEHY")
-    print(dec)
+    if any([args.encrypt, args.decrypt]):
+
+        playfair = Playfair(KEY)
+        playfair.create_matrix()
+
+    else:
+        print("[!] Please pass a flag for encrypt/decrypt/both.")
+        parser.print_usage()
+        sys.exit(1)
+
+    if args.encrypt:
+        res = playfair.encrypt(MESSAGE.upper())
+        print(f"Encrypted: {res}")
+
+    if args.decrypt:
+        decres = playfair.decrypt(MESSAGE.upper())
+        print(f"Decrypted: {decres}")
 
 
 if __name__ == "__main__":
