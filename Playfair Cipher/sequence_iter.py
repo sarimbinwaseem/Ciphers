@@ -5,6 +5,7 @@ using next()
 
 class SequenceIterator:
     """Iterator class for data to get iterated by next()"""
+
     def __init__(self, sequence):
         self._sequence = sequence
         self._index = 0

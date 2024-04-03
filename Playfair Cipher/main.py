@@ -16,7 +16,6 @@ class Playfair(PlayfairUtils):
         super().__init__()
         self.keyword = self.clean_keyword(keyword.upper())
         self.message_pair: list[str] = []
-        self.encrypted_msg: str = ""
 
     def create_matrix(self) -> None:
         """
@@ -66,25 +65,30 @@ class Playfair(PlayfairUtils):
 
     def encrypt(self, message: str) -> str:
         """
-        Encrypts message with the keyword matrix
-        Currently not implemented to the end.
+        Encrypts message with the keyword matrix.
+        Encrypt:
+            A loop gets all the pairs.
+            Checks are done for same row, same column and diff row and col.
         """
 
         assert isinstance(message, str)
+        encrypted_msg: str = ""
 
         self.make_message_pair(message)
         print(f"Message Pair: {self.message_pair}")
 
         for pair in self.message_pair:
-        ########## Check for one row ##########################
 
-            idx_one = self.get_letter_row(pair[0])
-            idx_two = self.get_letter_row(pair[1])
+            # idx = index
+
+            row_idx_one = self.get_letter_row(pair[0])
+            row_idx_two = self.get_letter_row(pair[1])
+
+            letter_idx_one = self.get_letter_index(row_idx_one, pair[0])
+            letter_idx_two = self.get_letter_index(row_idx_two, pair[1])
 
             # Both alphabets are in same row
-            if idx_one == idx_two:
-                letter_idx_one = self.get_letter_index(idx_one, pair[0])
-                letter_idx_two = self.get_letter_index(idx_two, pair[1])
+            if row_idx_one == row_idx_two:
 
                 if letter_idx_one == 4:
                     new_letter_idx_one = 0
@@ -96,22 +100,11 @@ class Playfair(PlayfairUtils):
                 else:
                     new_letter_idx_two = letter_idx_two + 1
 
-                self.encrypted_msg += f"{self.matrix[idx_one][new_letter_idx_one]}{self.matrix[idx_one][new_letter_idx_two]}"
+                encrypted_msg += f"{self.matrix[row_idx_one][new_letter_idx_one]}{self.matrix[row_idx_one][new_letter_idx_two]}"
 
-                print(self.encrypted_msg)
-
-        #######################################################
-
-        ########## Check for one column #######################
-
-            row_idx_one = self.get_letter_row(pair[0])
-            row_idx_two = self.get_letter_row(pair[1])
-
-            letter_idx_one = self.get_letter_index(row_idx_one, pair[0])
-            letter_idx_two = self.get_letter_index(row_idx_two, pair[1])
-
+            # Check for one column
             # Both alphabets are in same column
-            if letter_idx_one == letter_idx_two:
+            elif letter_idx_one == letter_idx_two:
 
                 if row_idx_one == 4:
                     new_idx_one = 0
@@ -123,33 +116,95 @@ class Playfair(PlayfairUtils):
                 else:
                     new_idx_two = row_idx_two + 1
 
-                self.encrypted_msg += f"{self.matrix[new_idx_one][letter_idx_one]}{self.matrix[new_idx_two][letter_idx_two]}"
+                encrypted_msg += f"{self.matrix[new_idx_one][letter_idx_one]}{self.matrix[new_idx_two][letter_idx_two]}"
 
-                print(self.encrypted_msg)
-
-        #######################################################
-
-        ##### Diff row and columns ############################
-
-            if row_idx_one != row_idx_two and letter_idx_one != letter_idx_two:
+            # Alphabets in diff row and column
+            elif row_idx_one != row_idx_two and letter_idx_one != letter_idx_two:
                 new_letter_idx_one = letter_idx_two
                 new_letter_idx_two = letter_idx_one
 
+                encrypted_msg += f"{self.matrix[row_idx_one][new_letter_idx_one]}{self.matrix[row_idx_two][new_letter_idx_two]}"
 
-                self.encrypted_msg += f"{self.matrix[row_idx_one][new_letter_idx_one]}{self.matrix[row_idx_two][new_letter_idx_two]}"
+        return encrypted_msg
 
-                print(self.encrypted_msg)
-        #######################################################
+    def decrypt(self, message: str) -> str:
+        """
+        Decrypts message with the keyword matrix.
+        Decrypt:
+            A loop gets all the pairs.
+            Checks are done for same row, same column and diff row and col.
+        """
+
+        assert isinstance(message, str)
+        decrypted_msg: str = ""
+
+        self.make_message_pair(message)
+        print(f"Message Pair: {self.message_pair}")
+
+        for pair in self.message_pair:
+
+            # idx = index
+
+            row_idx_one = self.get_letter_row(pair[0])
+            row_idx_two = self.get_letter_row(pair[1])
+
+            letter_idx_one = self.get_letter_index(row_idx_one, pair[0])
+            letter_idx_two = self.get_letter_index(row_idx_two, pair[1])
+
+            # Both alphabets are in same row
+            if row_idx_one == row_idx_two:
+
+                if letter_idx_one == 0:
+                    new_letter_idx_one = 4
+                else:
+                    new_letter_idx_one = letter_idx_one - 1
+
+                if letter_idx_two == 0:
+                    new_letter_idx_two = 4
+                else:
+                    new_letter_idx_two = letter_idx_two - 1
+
+                decrypted_msg += f"{self.matrix[row_idx_one][new_letter_idx_one]}{self.matrix[row_idx_one][new_letter_idx_two]}"
+
+            # Check for one column
+            # Both alphabets are in same column
+            elif letter_idx_one == letter_idx_two:
+
+                if row_idx_one == 0:
+                    new_idx_one = 4
+                else:
+                    new_idx_one = row_idx_one - 1
+
+                if row_idx_two == 0:
+                    new_idx_two = 4
+                else:
+                    new_idx_two = row_idx_two - 1
+
+                decrypted_msg += f"{self.matrix[new_idx_one][letter_idx_one]}{self.matrix[new_idx_two][letter_idx_two]}"
+
+            # Alphabets in diff row and column
+            elif row_idx_one != row_idx_two and letter_idx_one != letter_idx_two:
+                new_letter_idx_one = letter_idx_two
+                new_letter_idx_two = letter_idx_one
+
+                decrypted_msg += f"{self.matrix[row_idx_one][new_letter_idx_one]}{self.matrix[row_idx_two][new_letter_idx_two]}"
+
+        return decrypted_msg
 
 
 def main():
+    """main entry point."""
 
     pf = Playfair(keyword="AACHEN")
 
     pf.create_matrix()
     pprint(pf.matrix)
 
-    pf.encrypt("CHARLEMAGNE")
+    enc = pf.encrypt("CHARLEMAGNE")
+    print(enc)
+
+    dec = pf.decrypt("HECQOCKHIEHY")
+    print(dec)
 
 
 if __name__ == "__main__":
