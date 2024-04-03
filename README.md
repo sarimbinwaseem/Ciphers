@@ -29,7 +29,18 @@ python main.py -ed -m "The message of secret" -k 8
 
 
 ## Playfair Cipher
-- Encryption is working
-- Code needs optimization and a standard running procedure.
+### How to run:
+#### Encrypt:
+```
+python main.py -e -m "charlemagne" -k "AACHEN"
+```
+
+#### Decrypt:
+```
+python main.py -d -m "HECQOCKHIEHY" -k "AACHEN"
+```
+
+- Encryption is working.
+- Code needs optimization.
 - Spaces will break the code.
 - Double letters are not welcome in message at the moment.
