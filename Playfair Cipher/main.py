@@ -211,7 +211,7 @@ def main():
     )
     args = parser.parse_args()
 
-    MESSAGE = args.message
+    MESSAGE = args.message.replace(' ', '')
     KEY = args.key
 
     if any([args.encrypt, args.decrypt]):
