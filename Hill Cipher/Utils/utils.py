@@ -1,12 +1,18 @@
 """Utilities for Hill Cipher"""
 
 import numpy as np
-
+import string
 
 class Utils:
     """docstring for Utils"""
-    # def __init__(self):
-    #   super().__init__()
+    def __init__(self):
+        super().__init__()
+
+        self.themap = dict(enumerate(string.ascii_uppercase))
+        self.themap.update({26: ' '})
+
+        self.revmap = {char: index for index, char in enumerate(string.ascii_uppercase)}
+        self.revmap.update({' ': 26})
         
     def make_message_pair(self, message: str) -> list[str]:
         """
@@ -34,7 +40,7 @@ class Utils:
 
         return new_message
 
-    def convert_key_to_matrix(self, key: str):
+    def convert_key_to_matrix(self, key: str) -> np.array:
         """Converts key: str to numpy matrix for
         further multiplication process.
         """
@@ -47,11 +53,18 @@ class Utils:
         return np_key
 
 
-    def get_alpha_map(self) -> tuple:
+    def msg_to_matrix(self, msg: list[list[str]]) -> list[list[int]]:
+        """Converts every pair of msg to numpy array of indices"""
 
-        # {0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'E', 5: 'F' ... }
+        msg_matrix = [[self.revmap[l] for l in m] for m in msg]
+        np_msg_matrix = list(map(np.array, msg_matrix))
 
-        themap = dict(enumerate(string.ascii_uppercase))
-        themap.update({26: ' '})
+        return np_msg_matrix
 
-        return themap
+    def matrix_to_msg(self, matrix: list[list[int]]) -> str:
+        """Converts every pair of matrix to str"""
+
+        msg_matrix = [[self.themap[l] for l in m] for m in matrix]
+
+        return "".join(["".join(a) for a in msg_matrix])
+

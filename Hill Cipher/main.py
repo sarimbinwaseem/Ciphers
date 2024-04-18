@@ -10,20 +10,33 @@ Hill Cipher
 
 import sys
 import argparse
+import numpy
 from Utils.utils import Utils
 
 
 class HillCipher(Utils):
     """docstring for HillCipher"""
 
-    # def __init__():
-    # 	super().__init__()
-    # 	self.arg = arg
-
     def encrypt(self, key: str, msg: str):
-        key = self.convert_key_to_matrix(key)
-        print(self.make_message_pair(msg))
-        
+
+        final_msg: str = ""
+        tmp_msg_one = []
+        tmp_msg_two = []
+        KEY: numpy.array = self.convert_key_to_matrix(key)
+
+        msg_pairs: list[str] = self.make_message_pair(msg)
+
+        MSG_MATRIX = self.msg_to_matrix(msg_pairs)
+
+        # Multiplying the key and text
+        for pair in MSG_MATRIX:
+            tmp_msg_one.append(numpy.dot(KEY, pair))
+
+        for pair in tmp_msg_one:
+            pair[0] = pair[0] % 26
+            pair[1] = pair[1] % 26
+
+        return self.matrix_to_msg(tmp_msg_one)
 
 def main():
     """main entry point."""
@@ -67,7 +80,8 @@ def main():
         print(f"Encrypted: {res}")
 
     if args.decrypt:
-    	print("[!] Not implemented yet.")
+
+        print("[!] Not implemented yet.")
         # decres = hill.decrypt(MESSAGE.upper())
         # print(f"Decrypted: {decres}")
 
