@@ -45,3 +45,18 @@ python main.py -d -m "HECQOCKHIEHY" -k "AACHEN"
 - Code needs optimization.
 - Spaces will break the code.
 - Double letters are not welcome in message at the moment.
+
+
+## Hill Cipher
+### How to run:
+#### Encrypt:
+```
+python main.py -e -m "USMAN" -k "7 8 11 11"
+```
+
+#### Decrypt (Not implemented yet):
+```
+python main.py -d -m "" -k "7 8 11 11"
+```
+
+- Support for space can be activated by changing mod to 27.
