@@ -1,5 +1,8 @@
 """Utilities for Hill Cipher"""
 
+import numpy as np
+
+
 class Utils:
     """docstring for Utils"""
     # def __init__(self):
@@ -30,4 +33,25 @@ class Utils:
         new_message.append(temp_msg)
 
         return new_message
+
+    def convert_key_to_matrix(self, key: str):
+        """Converts key: str to numpy matrix for
+        further multiplication process.
+        """
+
+        q = list(map(int, key.split()))
+        e = [[q[0], q[1]], [q[2], q[3]]]
+
+        np_key = np.array(e)
         
+        return np_key
+
+
+    def get_alpha_map(self) -> tuple:
+
+        # {0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'E', 5: 'F' ... }
+
+        themap = dict(enumerate(string.ascii_uppercase))
+        themap.update({26: ' '})
+
+        return themap
