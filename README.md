@@ -4,7 +4,7 @@
 
 # Cipher Implementaions
 
-## Caesar Cipher:
+## Caesar Cipher
 ### How to run:
 
 #### Encrypt:
@@ -25,7 +25,7 @@ python main.py -ed -m "The message of secret" -k 8
 - -k/--key is optional as it defaults to 3
 
 
-## Affine Cipher:
+## Affine Cipher
 ### Comming soon
 
 
@@ -58,5 +58,6 @@ python main.py -e -m "USMAN" -k "7 8 11 11"
 ```
 python main.py -d -m "" -k "7 8 11 11"
 ```
+
 
 - Support for space can be activated by changing mod to 27.
