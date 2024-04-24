@@ -16,8 +16,16 @@ from Utils.utils import Utils
 
 class HillCipher(Utils):
     """docstring for HillCipher"""
+    def __init__(self):
+        super().__init__()
+        self.MOD = 26
 
     def encrypt(self, key: str, msg: str):
+
+        if ' ' in msg:
+            self.MOD = 27
+
+        print(f"[+] Moding from: {self.MOD}")
 
         final_msg: str = ""
         tmp_msg_one = []
@@ -33,8 +41,8 @@ class HillCipher(Utils):
             tmp_msg_one.append(numpy.dot(KEY, pair))
 
         for pair in tmp_msg_one:
-            pair[0] = pair[0] % 26
-            pair[1] = pair[1] % 26
+            pair[0] = pair[0] % self.MOD
+            pair[1] = pair[1] % self.MOD
 
         return self.matrix_to_msg(tmp_msg_one)
 
@@ -63,7 +71,7 @@ def main():
     )
     args = parser.parse_args()
 
-    MESSAGE = args.message.replace(" ", "")
+    MESSAGE = args.message
     KEY = args.key
 
     if any([args.encrypt, args.decrypt]):

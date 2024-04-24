@@ -6,7 +6,7 @@ import string
 class Utils:
     """docstring for Utils"""
     def __init__(self):
-        super().__init__()
+        # super().__init__()
 
         self.themap = dict(enumerate(string.ascii_uppercase))
         self.themap.update({26: ' '})

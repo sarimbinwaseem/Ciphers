@@ -60,7 +60,8 @@ python main.py -d -m "" -k "7 8 11 11"
 ```
 
 
-- Support for space can be activated by changing mod to 27.
+- ~~Support for space can be activated by changing mod to 27.~~
+- Mod value will be changed to 27 if space is present in message.
 
 <picture>
 	<img src="Images/hill-cipher.png" alt="Image of Hill Cipher running and output.">
