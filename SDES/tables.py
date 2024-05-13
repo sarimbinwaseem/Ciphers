@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+
 @dataclass
 class Tables:
     IP = [2, 5, 1, 6, 8, 4, 6]

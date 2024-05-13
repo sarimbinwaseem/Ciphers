@@ -1,19 +1,21 @@
 """SDES Cipher"""
+
 from pprint import pprint
 from copy import deepcopy
 from tables import Tables
 
+
 class SDES(Tables):
     """
     10 bit key
-    10 bit Plaintext  
+    10 bit Plaintext
     """
 
     def __init__(self):
         super().__init__()
         self.sub_key_1 = None
         self.sub_key_2 = None
-    
+
     def split_key(self, data) -> tuple[list]:
 
         to_slices: int = len(data) // 2
@@ -23,21 +25,21 @@ class SDES(Tables):
         return (first_half, second_half)
 
     def _shift_1_bit(self, first_half, second_half) -> tuple[list]:
-        
+
         first_half.append(first_half.pop(0))
         second_half.append(second_half.pop(0))
 
         return (first_half, second_half)
 
     def _shift_2_bit(self, first_half, second_half) -> tuple[list]:
-        
+
         for _ in range(2):
             first_half.append(first_half.pop(0))
             second_half.append(second_half.pop(0))
 
         return (first_half, second_half)
 
-    def get_subkey(self, e, for_p8):
+    def get_subkey(self, e):
 
         permuted_8 = []
         permuted_8 = [e[p] for p in self.P8]
@@ -74,15 +76,20 @@ class SDES(Tables):
 
         print(f"For P8: {for_p8}")
 
-        self.sub_key_1 = self.get_subkey(e, for_p8)
+        self.sub_key_1 = self.get_subkey(e)
 
         first_half, second_half = self._shift_2_bit(first_half, second_half)
         for_p8 = deepcopy(first_half)
         for_p8.extend(second_half)
-        self.sub_key_2 = self.get_subkey(e, for_p8)
+        e = {}
+        for index, k in enumerate(for_p8):
+            e[index + 1] = k
+        
+        self.sub_key_2 = self.get_subkey(e)
 
         print(f"Sub Key 1: {self.sub_key_1}")
         print(f"Sub Key 2: {self.sub_key_2}")
+
 
 sdes = SDES()
 sdes.sub_key_generation("1010111010")
