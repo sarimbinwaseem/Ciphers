@@ -1,6 +1,6 @@
 """SDES Cipher"""
 
-from pprint import pprint
+# from pprint import pprint
 from copy import deepcopy
 from tables import Tables
 
@@ -39,56 +39,57 @@ class SDES(Tables):
 
         return (first_half, second_half)
 
-    def get_subkey(self, e):
+    def get_subkey(self, for_p8):
 
-        permuted_8 = []
-        permuted_8 = [e[p] for p in self.P8]
+        permuted_8 = self._do_permutation(for_p8, 8)
 
         return permuted_8
 
+    def _do_permutation(self, data, permutaion_value):
+
+        indication_table = {}
+        for index, k in enumerate(data):
+            indication_table[index + 1] = k
+
+        match permutaion_value:
+            case 8:
+                permutor = self.P8
+            case 10:
+                permutor = self.P10
+            case _:
+                raise ValueError("Permutation value invalid!")
+
+        permuted = [indication_table[p] for p in permutor]
+
+        return permuted
+
     def sub_key_generation(self, key: str | int):
         """
-        P10 -> Shift 1 bit ->
-        P8 -> Shift 2 bit -> P8
+        P10 -> Shift 1 bit -> P8 -> Shift 2 bit -> P8
+        After every P8 is a sub key.
         """
 
         if len(key) != 10:
             raise ValueError("Key lenght is not 10.")
 
-        e = {}
-        for index, k in enumerate(key):
-            e[index + 1] = k
-
-        pprint(e)
-
-        permuted_10 = []
-        permuted_10 = [e[p] for p in self.P10]
-        pprint(permuted_10)
+        permuted_10 = self._do_permutation(key, 10)
 
         first_half, second_half = self.split_key(permuted_10)
         first_half, second_half = self._shift_1_bit(first_half, second_half)
 
-        print(first_half)
-        print(second_half)
-
         for_p8 = deepcopy(first_half)
         for_p8.extend(second_half)
 
-        print(f"For P8: {for_p8}")
-
-        self.sub_key_1 = self.get_subkey(e)
+        self.sub_key_1 = self.get_subkey(for_p8)
 
         first_half, second_half = self._shift_2_bit(first_half, second_half)
         for_p8 = deepcopy(first_half)
         for_p8.extend(second_half)
-        e = {}
-        for index, k in enumerate(for_p8):
-            e[index + 1] = k
-        
-        self.sub_key_2 = self.get_subkey(e)
 
-        print(f"Sub Key 1: {self.sub_key_1}")
-        print(f"Sub Key 2: {self.sub_key_2}")
+        self.sub_key_2 = self.get_subkey(for_p8)
+
+        print(f"Sub Key 1: {''.join(self.sub_key_1)}")
+        print(f"Sub Key 2: {''.join(self.sub_key_2)}")
 
 
 sdes = SDES()
