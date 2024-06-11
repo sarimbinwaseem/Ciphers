@@ -74,7 +74,15 @@ python main.py -d -m "" -k "7 8 11 11"
 ## SDES
 ### Simplified Data Encryption Standard
 
-- Only key geeration is implemented yet.
+- Only key generation is implemented yet.
+
+```bash
+python main.py
+```
+
+## Deffie Hellman
+
+- We have to check for repetition for ourselves (for now).
 
 ```bash
 python main.py

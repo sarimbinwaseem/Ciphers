@@ -63,7 +63,7 @@ if __name__ == "__main__":
     utility = DH_UTILS(PRIME_NUMBER)
     utility._primitive_root()
 
-    the_G: int = input("Check for repetation and enter G: ")
+    the_G: int = input("Check for repetition and enter G: ")
     the_G = int(the_G)
 
     source = DeffieHellman(PRIME_NUMBER, source_end, the_G)
