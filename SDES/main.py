@@ -70,7 +70,7 @@ class SDES(Tables):
         """
 
         if len(key) != 10:
-            raise ValueError("Key lenght is not 10.")
+            raise ValueError("Key length is not 10.")
 
         permuted_10 = self._do_permutation(key, 10)
 
@@ -91,6 +91,6 @@ class SDES(Tables):
         print(f"Sub Key 1: {''.join(self.sub_key_1)}")
         print(f"Sub Key 2: {''.join(self.sub_key_2)}")
 
-
-sdes = SDES()
-sdes.sub_key_generation("1010111010")
+if __name__ == "__main__":
+    sdes = SDES()
+    sdes.sub_key_generation("10101110100")
